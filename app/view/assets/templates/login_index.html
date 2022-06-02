@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Example</title>
+    <link rel="stylesheet" type="text/css" href="/css/SimpleLoginCss.css">  
+    <script src="/js/login.js"></script>
+</head>
+<body class="align">
+    <p>로그인 예제</p>
+    <a id="protected">보호된 페이지</a>
+    <div class="grid">
+        <form action="/login" method="post" class="form login" id="login_form">
+            <header class="login__header">
+                <h3 class="login__title">Login</h3>
+            </header>
+            <div class="login__body">
+                <div class="form__field">
+                    <input id="id" type="text" placeholder="ID" name="id">
+                </div>
+                <div class="form__field">
+                    <input id="pw" type="password" placeholder="Password" name="pw">
+                </div>
+            </div>
+
+            <footer class="login__footer">
+                <a href="/register">Register</a>
+                <input type="button" value="Login" onclick="login();">
+                <p><span class="icon icon--info">?</span><a href="#">Forgot Password</a></p>
+            </footer>
+        </form>
+    </div>
+    
+    
+</body>
+</html>
