@@ -1,5 +1,4 @@
 async function login() {
-  alert("login button click");
   // form data 생성
   var formData = new FormData(document.getElementById("login_form"));
   
@@ -7,15 +6,35 @@ async function login() {
   await fetch('/login_with_cookies', {
       method: 'post',
       body : formData
-  }).then(function(){
-      // login 완료시 login form을 숨긴다
-      document.getElementById("login_form").style.display = "none";
+  })
+  .then((response)=>response.json())
+  .then(function(data){
+      // TODO: success가 왔는지 확인해야한다.
+      if(data["msg"]=="success"){
+          var user_id = data["user_id"];
+          document.getElementById("user_id").innerHTML = user_id+"님 환영합니다.";
+          // login 완료시 login form을 숨긴다
+          document.getElementById("login_form").style.display = "none";
+
+          // login 완료시 logout form을 보여준다.
+          document.getElementById("logout_form").style.display = "";
+      }
+
+  })
+  .catch(()=>{
+    alert("로그인에 실패했습니다.");
   });
+  
   console.log(getCookie('csrf_access_token'));
 }
 
 async function logout() {
-  await fetch('/logout_with_cookies', {method: 'post'});
+    await fetch('/logout_with_cookies', {method: 'post'});
+    // logout시 logout form을 숨긴다.
+    document.getElementById("logout_form").style.display = "none";
+
+    // logout시 login form을 보여준다.
+    document.getElementById("login_form").style.display = "";
   console.log(getCookie('csrf_access_token'));
 }
 

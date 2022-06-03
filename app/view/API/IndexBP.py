@@ -1,3 +1,4 @@
+import datetime
 from flask import (
     Blueprint, render_template, jsonify, request
 )
@@ -31,10 +32,14 @@ class IndexBp:
                 print('인증 완료(test)')
                 
 
-                access_token = create_access_token(identity=user_id)
+                access_token = create_access_token(identity=user_id, 
+                                    expires_delta=datetime.timedelta(seconds=5))
                 refresh_token = create_refresh_token(identity=user_id)
                 
-                response = jsonify({"msg": "login successful"})
+                response = jsonify({
+                    "msg": "success",
+                    "user_id": user_id
+                    })
 
                 # set_access_cookies를 통해 access_token을 저장할 수 있다.
                 set_access_cookies(response, access_token)

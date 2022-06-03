@@ -8,7 +8,6 @@
 </head>
 <body class="align">
     <p>로그인 예제</p>
-    <a id="protected">보호된 페이지</a>
     <div class="grid">
         <form action="/login" method="post" class="form login" id="login_form">
             <header class="login__header">
@@ -29,6 +28,11 @@
                 <p><span class="icon icon--info">?</span><a href="#">Forgot Password</a></p>
             </footer>
         </form>
+        <footter id="logout_form" style="display: none;">
+            <p id="user_id">test</p>
+            <input type="button" value="logout" onclick="logout();">
+            <input type="button" value="protected" onclick="makeRequestWithJWT();">
+        </footter>
     </div>
     
     
