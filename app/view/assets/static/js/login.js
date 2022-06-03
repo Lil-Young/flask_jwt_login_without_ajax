@@ -55,6 +55,9 @@ async function makeRequestWithJWT() {
   };
   const response = await fetch('/protected', options);
   const result = await response.json();
+  if(result["msg"]=="Token has expired"){
+    console.log("token이 만료되었습니다.");
+  }
   console.log(result);
   return result;
 }
