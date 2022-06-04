@@ -3,7 +3,7 @@ from flask import (
     Blueprint, render_template, jsonify, request
 )
 from flask_jwt_extended import *
-
+from datetime import *
 def error(msg):
     return msg
 
@@ -16,8 +16,7 @@ class IndexBp:
     
     @bp.route("/login_with_cookies", methods=["POST"])
     def login_with_cookies():
-        print('request = ', request)
-        # 요청이 POST인지 확인print('requepw = ', requepw)
+        # 요청이 POST인지 확인
         if request.method == 'POST':
 
             form_data = request.form
@@ -25,15 +24,16 @@ class IndexBp:
             user_pw = form_data['pw']
             print('user_id = ', user_id)
             print('user_pw = ', user_pw)
+
             """
             DB에서 회원정보 확인, 입력값, 유효성 인증 등 작업 생략
             """
+
             if user_id==user_pw=='test':
                 print('인증 완료(test)')
                 
 
-                access_token = create_access_token(identity=user_id, 
-                                    expires_delta=datetime.timedelta(seconds=5))
+                access_token = create_access_token(identity=user_id)
                 refresh_token = create_refresh_token(identity=user_id)
                 
                 response = jsonify({
