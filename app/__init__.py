@@ -2,7 +2,9 @@
 app/__init__
 Application Factory 역할을 담당하는 부분
 '''
+from datetime import timedelta
 from flask import Flask, render_template
+from app.view import API
 # JWT 확장 라이브러리 임포트하기
 from flask_jwt_extended import *
 
@@ -28,11 +30,20 @@ def create_app():
 
         ### JWT 토큰을 생성하는데 필요한 고유의 시크릿 키 값 설정 ###
         JWT_SECRET_KEY = 'secret string',
+
+        ### access_token 만료 기간 설정 // 5초
+        JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=5),
+
+        ### refresh_token 만료 기간 설정 // 5분
+        JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=5)
     )
 
     # JWT 모듈을 flask 어플리케이션에 등록
     jwt_manager = JWTManager()
     jwt_manager.init_app(app)
+
+    # API http request handling 설정
+    API.init_app(app)
 
     # blueprint 등록
     app.register_blueprint(IndexBp.bp)
