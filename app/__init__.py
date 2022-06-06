@@ -32,7 +32,7 @@ def create_app():
         JWT_SECRET_KEY = 'secret string',
 
         ### access_token 만료 기간 설정 // 5초
-        JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=10),
+        JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=20),
 
         ### refresh_token 만료 기간 설정 // 5분
         JWT_REFRESH_TOKEN_EXPIRES = timedelta(hours=1)
@@ -47,7 +47,7 @@ def create_app():
     def my_expired_token_callback(jwt_header, jwt_payload):
         return jsonify({
             'msg':'token has expired',
-            'result': 'false'
+            'result': 'fail'
         }), 401
 
     # API http request handling 설정
