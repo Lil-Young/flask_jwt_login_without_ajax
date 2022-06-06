@@ -1,7 +1,12 @@
 """
 API Request Handler and util
 """
+from flask import jsonify
+
+
 def init_app(app):
+    
+    ####################### HTTP request handling ########################
     # 앱이 기동되고 나서 첫번째 HTTP 요청에만 응답한다.
     @app.before_first_request
     def before_first_request():
@@ -28,3 +33,5 @@ def init_app(app):
     def teardown_appcontext(exception):
         print("4. HTTP요청의 어플리케이션 컨텍스트가 종료될때 실행")
         print("*"*30)
+
+        
