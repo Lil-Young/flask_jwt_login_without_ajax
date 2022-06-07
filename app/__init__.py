@@ -32,10 +32,10 @@ def create_app():
         JWT_SECRET_KEY = 'secret string',
 
         ### access_token 만료 기간 설정 // 5초
-        JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=20),
+        JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=10),
 
         ### refresh_token 만료 기간 설정 // 5분
-        JWT_REFRESH_TOKEN_EXPIRES = timedelta(hours=1)
+        JWT_REFRESH_TOKEN_EXPIRES = timedelta(seconds=10)
     )
 
     # JWT 모듈을 flask 어플리케이션에 등록
