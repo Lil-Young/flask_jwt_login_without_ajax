@@ -35,16 +35,22 @@
 - 유효한 리프레시 토큰을 받아 엑세스 토큰과 리프레시 토큰을 재발행합니다.
 - 재발행된 토큰들을 쿠키에 저장합니다.
 
-# GET Started
+# GET Started (Windows)
 ```
+# Get Repository
+> git clone https://github.com/songyw0517/flask_jwt_login_without_ajax.git
+> cd flask_jwt_login_without_ajax
 
+# virtual env
+> py -3 -m venv venv
+> venv\Scripts\activate
+
+# Install dependency
+> pip install -r requirements.txt
+
+# set flask application
+> set flask_app=manage:application
+
+# App start
+> flask run
 ```
-
-
-
-# 한계
-- 새로고침시 리프레시 토큰을 API에 전송하여 만료된 토큰을 갱신하고 싶었으나 
-
-만료된 토큰으로 접근시 window.addEventListener('load', (event) =>{} 함수 접근이 안되었고, 
-
-데이터를 요청할 수도, 받은 데이터를 처리할 수 도 없었습니다.
