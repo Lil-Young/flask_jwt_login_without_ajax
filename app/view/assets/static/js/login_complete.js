@@ -1,5 +1,12 @@
 window.addEventListener('load', (event) =>{
     alert("새로고침 되었습니다.");
+    /*
+    새로고침시 리프레시 토큰을 API에 전송하여 만료된 토큰을 갱신하고 싶었으나 
+
+    만료된 토큰으로 접근시 window.addEventListener('load', (event) =>{} 함수 접근이 안되었고, 
+
+    데이터를 요청할 수도, 받은 데이터를 처리할 수 도 없었습니다.
+    */
 });
 
 // 쿠키 가져오는 함수
