@@ -54,3 +54,6 @@
 # App start
 > flask run
 ```
+
+# 피드백
+- flask server에서 rendering한 html을 반환하지 않고, js에서 html로 접근할 수 있도록 할 것
