@@ -4,9 +4,9 @@
 # flask API
 - 로그인 ("/signin")
 - 로그아웃 ("/logout_with_cookies") : 사용 X
-- 보호된 페이지 접근 ("/protected")
-- 토큰 확인 ("/check_token")
-- 자동 리프레시 ("/silent-refresh")
+- 엑세스 토큰 확인 ("/check_access_token")
+- 리프레시 토큰 확인 ("/check_refresh_token)
+- 보호된 페이지 접근 ("/protected_page")
 
 # API Description
 ## 로그인 ("/signin")
@@ -18,22 +18,32 @@
     - 응답메시지 생성후 응답
 - 만약 인증이 되지 않을 경우 로그인 실패 응답메시지를 생성하여 보냅니다.
 
-## 보호된 페이지 접근 ("/protected")
-- 유효한 엑세스 토큰을 통해 접근할 수 있는 API입니다.
-- 엑세스 토큰이 만료된채로 접근할 경우 에러 메시지를 반환시킵니다.
-    - 이때 발생되는 에러메시지는 app.\_\_init\_\_.py의 
-    - @jwt_manager.expired_token_loader의 콜백함수에 설정합니다.
-- 정상적으로 접근했을 경우 'login_complete.html'을 랜더링하여 응답합니다.
+## 엑세스 토큰 확인 ("/check_access_token")
+- 엑세스 토큰이 포함된 요청을 받아 엑세스 토큰이 유효한지 확인하여 응답합니다.
+- 유효한 경우 {
+    "msg":"success",
+    "identity":identity
+    } 메시지를 반환합니다.
+- 유효하지 않은 경우 app/\_\_init\_\_.py의
+@jwt_manager.expired_token_loader에 정의되어 있는 메시지로 응답합니다.
+
+    {msg':'token has expired','result': 'fail'}
+
+## 리프레시 토큰 확인 ("/check_refresh_token")
+- (엑세스 토큰이 만료된 경우,) 리프레시 토큰이 포함된 요청을 받아 리프레시 토큰이 유효한지 확인합니다.
+- 리프레시 토큰이 유효할 경우 엑세스 토큰을 재발행하고, 쿠키에 저장합니다.
+- 정상적으로 작동할 경우(리프레시 토큰이 유효한 경우)
+
+    {"msg":"success","identity":identity}를 반환합니다.
+- 정상적으로 작동하지 않을 경우(리프레시 토큰이 유효하지 않을 경우)
+@jwt_manager.expired_token_loader에 정의되어 있는 메시지로 응답합니다.
+
+    {msg':'token has expired','result': 'fail'}
 
 
-## 토큰 확인 ("/check_token")
-- 웹에서 보낸 토큰이 유효한지 확인하는 API입니다.
-- 유효할 경우 "msg":"success" 메시지를 반환하며
-- 유효하지 않을 경우 @jwt_manager.expired_token_loader에 설정된 메시지를 반환합니다.
-
-## 자동 리프레시 ("/silent-refresh")
-- 유효한 리프레시 토큰을 받아 엑세스 토큰과 리프레시 토큰을 재발행합니다.
-- 재발행된 토큰들을 쿠키에 저장합니다.
+## 보호된 페이지 접근 ("/protected_page")
+- 프론트엔드에서 서버와의 통신을 통해 유효한 토큰을 가지고 있을 때 요청할 수 있는 API입니다.
+- login_complete_html을 랜더링하여 반환합니다.
 
 # GET Started (Windows)
 ```
@@ -56,4 +66,4 @@
 ```
 
 # 피드백
-- flask server에서 rendering한 html을 반환하지 않고, js에서 html로 접근할 수 있도록 할 것
+- 
