@@ -7,9 +7,10 @@ from flask import Flask, render_template, jsonify
 from app.view import API
 # JWT 확장 라이브러리 임포트하기
 from flask_jwt_extended import *
+from flask_cors import CORS
 
 """ blueprints """
-from app.view.API.IndexBP import IndexBp
+from app.view.API.index_bp import index_bp
 
 def create_app():
     # application factory 생성
@@ -20,22 +21,24 @@ def create_app():
         static_folder='view/assets/static/', # static 폴더 경로 설정 -> 정적 기본 경로/static 폴더 경로에 위치한다.
         template_folder='view/assets/templates/') # templates 폴더 경로 설정 -> 정적 기본 경로/templates 폴더 경로에 위치한다.
 
+    CORS(app)
+
     # app config 설정
     app.config.update(
         DEBUG = True,
         
-        JWT_TOKEN_LOCATION = ['headers', 'cookies', 'json', 'query_string'],
+        JWT_TOKEN_LOCATION = ['headers'],
 
         JWT_COOKIE_SECURE = False,
 
         ### JWT 토큰을 생성하는데 필요한 고유의 시크릿 키 값 설정 ###
         JWT_SECRET_KEY = 'secret string',
 
-        ### access_token 만료 기간 설정 // 5초
+        ### access_token 만료 기간 설정 // 10초
         JWT_ACCESS_TOKEN_EXPIRES = timedelta(seconds=10),
 
         ### refresh_token 만료 기간 설정 // 5분
-        JWT_REFRESH_TOKEN_EXPIRES = timedelta(seconds=10)
+        JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes=5)
     )
 
     # JWT 모듈을 flask 어플리케이션에 등록
@@ -54,6 +57,6 @@ def create_app():
     API.init_app(app)
 
     # blueprint 등록
-    app.register_blueprint(IndexBp.bp)
+    app.register_blueprint(index_bp.bp)
 
     return app

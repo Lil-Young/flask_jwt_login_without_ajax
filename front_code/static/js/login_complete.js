@@ -1,16 +1,14 @@
 window.addEventListener('load', (event) =>{
-    let check = getCookie('csrf_access_token');
-    if (check == undefined) {
-        alert("접근 권한이 없습니다.");
-        window.location.replace("/")
-    }
-
     alert("새로고침 되었습니다.");
+    if (window.localStorage.getItem('access_token') == undefined) {
+        window.location.href="login_index.html";
+    }
     // access token이 유효한지 확인
-    fetch("/check_access_token",{
+    fetch("http://localhost:5000/check_access_token",{
         method:"post",
         headers:{
-            'X-CSRF-TOKEN': getCookie('csrf_access_token'),
+            "Authorization": "Bearer " + window.localStorage.getItem('access_token'),
+            'Content-Type': 'application/json'
         }
     })
     .then((res) => res.json())
@@ -18,11 +16,11 @@ window.addEventListener('load', (event) =>{
         if(res["msg"]=="token has expired"){
             // 엑세스 토큰이 만료된 블록
             // 2. 리프레시 토큰으로 다시 요청한다.
-            fetch("/check_refresh_token",{
+            fetch("http://localhost:5000/check_refresh_token",{
                 method:"post",
                 headers:{
-                    'X-CSRF-TOKEN': getCookie('csrf_refresh_token')
-                
+                    'Authorization': "Bearer " + window.localStorage.getItem('refresh_token'),
+                    'Content-Type': 'application/json'
                 }
             })
             .then((res)=>res.json())
@@ -30,11 +28,13 @@ window.addEventListener('load', (event) =>{
                 if(res["msg"]=="token has expired"){
                     // 리프레시 토큰도 만료된 블록
                     console.log("리프레시 토큰 만료");
-                    window.location.href="/"; // 로그인 화면으로 이동
+                    window.location.href="login_index.html"; // 로그인 화면으로 이동
                 }
                 else{
                     console.log("리프레시 토큰으로 접근 완료");
-                    window.location.replace("/protected_page");
+                    window.localStorage.setItem('access_token', res['access_token'])
+                    window.localStorage.setItem('refresh_token', res['refresh_token'])
+                    window.location.reload();
                 }
             });
         }else{
