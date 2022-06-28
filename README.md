@@ -14,8 +14,8 @@
 - form data로부터 사용자의 id, password를 추출하여 간단한 인증(id==pw=="test")을 수행합니다.
 - 인증을 완료하면 다음을 수행합니다.
     - access_token, refresh_token을 발행
-    - access_token, refresh_token을 쿠키에 저장 // set_****_cookies()
-    - 응답메시지 생성후 응답
+    - access_token, refresh_token을 응답(response)에 포함시키기
+    - 응답메시지 반환
 - 만약 인증이 되지 않을 경우 로그인 실패 응답메시지를 생성하여 보냅니다.
 
 ## 엑세스 토큰 확인 ("/check_access_token")
@@ -40,11 +40,6 @@
 
     {msg':'token has expired','result': 'fail'}
 
-
-## 보호된 페이지 접근 ("/protected_page")
-- 프론트엔드에서 서버와의 통신을 통해 유효한 토큰을 가지고 있을 때 요청할 수 있는 API입니다.
-- login_complete_html을 랜더링하여 반환합니다.
-
 # GET Started (Windows)
 ```
 # Get Repository
@@ -66,4 +61,4 @@
 ```
 
 # 피드백
-- 
+- SSR이 아닌 CSR구조로 변경한다면 새로고침 시, js를 통해 refresh토큰을 보낼 수 있을 것이다.
