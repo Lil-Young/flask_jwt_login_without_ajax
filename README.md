@@ -16,12 +16,8 @@
 - form data로부터 사용자의 id, password를 추출하여 간단한 인증(id==pw=="test")을 수행합니다.
 - 인증을 완료하면 다음을 수행합니다.
     - access_token, refresh_token을 발행
-<<<<<<< Updated upstream
     - access_token, refresh_token을 응답(response)에 포함시키기
-    - 응답메시지 반환
-=======
     - 응답 메시지 생성후, access_token, refresh_token을 포함시켜 응답합니다.
->>>>>>> Stashed changes
 - 만약 인증이 되지 않을 경우 로그인 실패 응답메시지를 생성하여 보냅니다.
 
 ## 엑세스 토큰 확인 ("/check_access_token")
